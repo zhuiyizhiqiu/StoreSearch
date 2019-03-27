@@ -16,9 +16,9 @@ class SearchResultCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        let selectView = UIView(frame: CGRect.zero)
-//        selectView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 0.5)
-//        selectedBackgroundView = selectView
+        let selectView = UIView(frame: CGRect.zero)
+        selectView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 0.5)
+        selectedBackgroundView = selectView
         // Initialization code
     }
 
