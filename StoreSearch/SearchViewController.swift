@@ -51,15 +51,7 @@ class SearchViewController: UIViewController {
         return url!
     }
 
-    func performStoreRequest(with url: URL) -> Data?{
-        do {
-            return try Data(contentsOf: url)
-        } catch {
-            print("Download Error: \(error.localizedDescription)")
-            showNetworkError()
-            return nil
-        }
-    }
+
     
     func parse(data: Data) -> [SearchResult] {
         do{
@@ -93,26 +85,34 @@ extension SearchViewController: UISearchBarDelegate{
             hasSearched = true
             searchResults = []
             
-            let queue = DispatchQueue.global()
             let url = iTunesURL(searchText: searchBar.text!)
-            queue.async {
-                print("URL:\(url)")
-                if let data = self.performStoreRequest(with: url){
-                    self.searchResults = self.parse(data: data)
-                    self.searchResults.sort(by: <)
-                    self.searchResults.sort { (result1, result2) -> Bool in
-                        return result1.type.localizedStandardCompare(result2.type) == .orderedAscending
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                if let error = error {
+                    print("error: \(error)")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.hasSearched = false
+                        self.tableView.reloadData()
+                        self.showNetworkError()
                     }
-                    print("searchResult: \(self.searchResults)")
+                }else if let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200{
+                    if let data = data {
+                        self.searchResults = self.parse(data: data)
+                        self.searchResults.sort(by: <)
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            self.tableView.reloadData()
+                            print("tableReload on main thread " + (Thread.current.isMainThread ? "Yes" : "No"))
+                        }
+                        print("return on main thread " + (Thread.current.isMainThread ? "Yes" : "No"))
+                        return
+                    }
+                }else{
+                   print("Failure! \(response!)")
                 }
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    self.tableView.reloadData()
-                }
-            }
-
-//            isLoading = false
-//            tableView.reloadData()
+            })
+            dataTask.resume()
         }
     }
     
