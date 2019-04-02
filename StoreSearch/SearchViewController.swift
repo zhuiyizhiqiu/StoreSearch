@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
 
     var searchResults = [SearchResult]()
     
+    var dataTask: URLSessionDataTask?
+    
     struct TableViewCelllIdentifiers {
         static let searchResultCell = "SearchResultCell"
         static let nothingFoundCell = "NothingFoundCell"
@@ -79,6 +81,7 @@ extension SearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
+            dataTask?.cancel()
             isLoading = true
             tableView.reloadData()
 
@@ -87,16 +90,10 @@ extension SearchViewController: UISearchBarDelegate{
             
             let url = iTunesURL(searchText: searchBar.text!)
             let session = URLSession.shared
-            let dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
-                if let error = error {
-                    print("error: \(error)")
-                    DispatchQueue.main.async {
-                        self.isLoading = false
-                        self.hasSearched = false
-                        self.tableView.reloadData()
-                        self.showNetworkError()
-                    }
-                }else if let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200{
+            dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                if let error = error as NSError?, error.code == -999{
+                    return
+                } else if let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200{
                     if let data = data {
                         self.searchResults = self.parse(data: data)
                         self.searchResults.sort(by: <)
@@ -109,10 +106,15 @@ extension SearchViewController: UISearchBarDelegate{
                         return
                     }
                 }else{
-                   print("Failure! \(response!)")
+                        DispatchQueue.main.async {
+                            self.hasSearched = false
+                            self.isLoading = false
+                            self.tableView.reloadData()
+                            self.showNetworkError()
+                        }
                 }
             })
-            dataTask.resume()
+            dataTask?.resume()
         }
     }
     
