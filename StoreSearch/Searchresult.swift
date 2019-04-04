@@ -13,8 +13,8 @@ class ResultArray:Codable {
 }
 
 class SearchResult:Codable,CustomStringConvertible {
-    var artistName: String?
-    var trackName = ""
+    var artistName = ""
+    var trackName: String?
     var kind: String?
     var trackPrice: Double?
     var currency = ""

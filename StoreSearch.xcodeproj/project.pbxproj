@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A5DCBCA2254C5C40067324F /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DCBC92254C5C40067324F /* UIImageView+DownloadImage.swift */; };
 		1A695CA22248AD180097309D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A695CA12248AD180097309D /* AppDelegate.swift */; };
 		1A695CA42248AD180097309D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A695CA32248AD180097309D /* SearchViewController.swift */; };
 		1A695CA72248AD180097309D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A695CA52248AD180097309D /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A5DCBC92254C5C40067324F /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		1A695C9E2248AD180097309D /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A695CA12248AD180097309D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A695CA32248AD180097309D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				1A695CB32248D5A80097309D /* Searchresult.swift */,
 				1A695CA32248AD180097309D /* SearchViewController.swift */,
 				1AF11A75224B72FA00D93A4C /* SearchResultCell.swift */,
+				1A5DCBC92254C5C40067324F /* UIImageView+DownloadImage.swift */,
 				1AF11A71224A264F00D93A4C /* SearchResultCell.xib */,
 				1A77CE4B2252321000E1CDD7 /* LoadingCell.xib */,
 				1AF11A77224BA7DB00D93A4C /* NothingFoundCell.xib */,
@@ -153,6 +156,7 @@
 				1A695CA42248AD180097309D /* SearchViewController.swift in Sources */,
 				1AF11A76224B72FA00D93A4C /* SearchResultCell.swift in Sources */,
 				1A695CA22248AD180097309D /* AppDelegate.swift in Sources */,
+				1A5DCBCA2254C5C40067324F /* UIImageView+DownloadImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
